@@ -1,0 +1,4 @@
+client/node_modules
+client/scripts/app-bundle.js
+client/scripts/app-bundle.js.map
+client/scripts/vendor-bundle.js
