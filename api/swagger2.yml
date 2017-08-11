@@ -1,0 +1,140 @@
+swagger: '2.0'
+info:
+  title: Contact Manager
+  description: Aurelia Contact Manager Tutorial
+  version: "0.0.1"
+host: localhost
+schemes:
+- http
+basePath: /api/contacts
+consumes:
+- application/json
+produces:
+- application/json
+paths:
+  /:
+    get:
+      summary: list of contacts
+      responses:
+        200:
+          description: A JSON message and array of contacts
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              contacts:
+                type: array
+                items:
+                  $ref: "#/definitions/Contact"
+    post:
+      parameters:
+        - name: contact
+          in: body
+          description: The contact JSON you want to post
+          required: true
+          schema:
+            $ref: "#/definitions/Contact"
+      responses:
+        "200":
+          description: contact created
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              obj:
+                $ref: "#/definitions/InsertOneResult"
+  /{contactId}:
+    get:
+      parameters:
+      - name: contactId
+        type: string
+        in: path
+        required: true
+        description: contact id
+      responses:
+        200:
+          description: requested contact
+          schema:
+            $ref: "#/definitions/Contact"
+    patch:
+      parameters:
+      - name: contactId
+        type: string
+        in: path
+        required: true
+        description: MongoDB contact id
+      responses:
+        "200":
+          description: updated contact
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              obj:
+                $ref: "#/definitions/Contact"
+              result:
+                $ref: "#/definitions/UpdateResult"
+    delete:
+      parameters:
+        - name: contactId
+          in: path
+          required: true
+          description: MongoDB contact id
+          type: string
+      responses:
+        "200":
+          description: contact deleted
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              result:
+                $ref: "#/definitions/DeleteResult"
+definitions:
+  Contact:
+    type: object
+    properties:
+      _id:
+        type: string
+        description: MongoDB contact id
+      first:
+        type: string
+        description: first name
+      last:
+        type: string
+        description: last name
+      email:
+        type: string
+        description: email address
+      phone:
+        type: string
+        description: phone number
+  DeleteResult:
+    type: object
+    properties:
+      acknowledged:
+        type: boolean
+      deleted_count:
+        type: integer
+  InsertOneResult:
+    type: object
+    properties:
+      acknowledged:
+        type: boolean
+      inserted_id:
+        type: string
+  UpdateResult:
+    type: object
+    properties:
+      acknowledged:
+        type: boolean
+      matched_count:
+        type: integer
+      modified_count:
+        type: integer
+      updated_id:
+        type: string

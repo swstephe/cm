@@ -1,0 +1,1 @@
+<template><div class="panel"><ul class="menu-list"><a class="panel-block ${contact.id === $parent.selectedId ? 'is-active' : ''}" repeat.for="contact of contacts" route-href="route: contacts; params.bind: {id:contact.id}" click.delegate="$parent.select(contact)"><h4>${contact.first} ${contact.last}</h4><p>${contact.email}</p></a></ul></div></template>

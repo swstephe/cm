@@ -1,0 +1,11 @@
+template
+  .panel
+    ul.menu-list
+      a(
+        repeat.for='contact of contacts'
+        route-href='route: contacts; params.bind: {id:contact.id}'
+        class="panel-block ${contact.id === $parent.selectedId ? 'is-active' : ''}"
+        click.delegate='$parent.select(contact)'
+      )
+        h4 ${contact.first} ${contact.last}
+        p ${contact.email}

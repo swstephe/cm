@@ -1,0 +1,11 @@
+template
+  require(from='./app/header')
+  require(from='./contacts/view-list')
+
+  .container
+    header(title.bind='Contacts')
+    loading-indicator(loading.bind='router.isNavigating || api.http.isRequesting')
+
+    .columns
+      contact-list.column.is-one-third
+      router-view.column.is-two-thirds

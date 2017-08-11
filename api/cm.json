@@ -1,0 +1,23 @@
+{
+  "title": "Contact",
+  "description": "JSON Schema for Aurelia Contacts example",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "first": {
+      "type": "string"
+    },
+    "last": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    }
+  },
+  "required": ["id", "first", "last", "email"]
+}
