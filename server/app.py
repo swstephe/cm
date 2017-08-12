@@ -38,12 +38,6 @@ def scripts(path):
     return bottle.static_file(path, root=os.path.join(CLIENT, 'scripts'))
 
 
-@app.route('/src/<path:path>')
-def scripts(path):
-    log.debug("/src/%s -> %r", path, os.path.join(CLIENT, 'src', path))
-    return bottle.static_file(path, root=os.path.join(CLIENT, 'src'))
-
-
 @app.route('/ui/ui.css')
 def ui_css():
     return bottle.static_file('ui.css', root=UI)

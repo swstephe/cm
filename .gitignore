@@ -1,4 +1,5 @@
 client/node_modules/
 client/scripts/
 server/**/*.pyc
+server/api/atlas.yml
 ui/.sass-cache/

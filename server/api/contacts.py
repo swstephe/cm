@@ -1,9 +1,10 @@
 # -*- coding: utf8 -*-
 import logger
 from bottle import Bottle, request, response
-from bottle_mongo import MongoPlugin
+from plugins.mongo import MongoPlugin
 from bson.objectid import ObjectId
 from mongo_dict import Visitor
+from config import URI
 
 log = logger.getLogger(__name__)
 api = Bottle()
@@ -60,4 +61,5 @@ def delete_handler(mongodb, _id):
     )
 
 
-api.install(MongoPlugin(uri='mongodb://127.0.0.1', db='contacts', json_mongo=False))
+plugin = MongoPlugin(URI, 'contacts', json_mongo=False)
+api.install(plugin)
