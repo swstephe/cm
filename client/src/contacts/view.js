@@ -27,7 +27,7 @@ export class ContactDetail {
   }
 
   save() {
-    this.service.saveContact(this.contact).then(contact => {
+    this.service.updateContact(this.contact).then(contact => {
       this.contact = contact;
       this.routeConfig.navModel.setTitle(contact.first);
       this.originalContact = JSON.parse(JSON.stringify(contact));
