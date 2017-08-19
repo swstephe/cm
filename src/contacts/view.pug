@@ -3,26 +3,27 @@ template
     .panel-heading
       h3.title Profile
     .panel-block
-      form(role='form')
+      form.control(role='form')
         .field.is-horizontal
-          .field-label.is-normal
-           label.label(for='first') First Name
-          .field-body: .field: .control: input#first.input(type='text' value.bind='contact.first')
+          .field-label
+             label.label(for='first') First Name
+          .field-body: .field: .control.is-expanded
+            input#first.input(type='text' value.bind='contact.first')
 
         .field.is-horizontal
-          .field-label.is-normal
+          .field-label
            label.label(for='last') Last Name
-          .field-body: .field: .control
+          .field-body: .field: .control.is-expanded
             input#last.input(type='text' value.bind='contact.last')
 
         .field.is-horizontal
-          .field-label.is-normal
+          .field-label
            label.label(for='email') Email
           .field-body: .field: .control
             input#email.input(type='text' value.bind='contact.email')
 
         .field.is-horizontal
-          .field-label.is-normal
+          .field-label
            label.label(for='phone') Phone Number
           .field-body: .field: .control
             input#phone.input(type='text' value.bind='contact.phone')

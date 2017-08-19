@@ -13,6 +13,8 @@
     "aurelia-fetch-client": "^1.1.2",
     "aurelia-http-client": "^1.1.1",
     "bluebird": "^3.4.1",
+    "gulp-autoprefixer": "^4.0.0",
+    "gulp-sass": "^3.1.0",
     "nprogress": "^0.2.0",
     "requirejs": "^2.3.2",
     "text": "github:requirejs/text#latest"

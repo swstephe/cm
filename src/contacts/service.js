@@ -7,7 +7,7 @@ export class ContactService {
   constructor(httpClient) {
     this.http = httpClient
       .configure(x => {
-        x.withBaseUrl('/api/contacts');
+        x.withBaseUrl(window.api_host + '/api/contacts');
         x.withHeader('Content-Type', 'application/json');
       });
   }
