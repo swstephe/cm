@@ -1,17 +1,14 @@
-import environment from './environment';
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import App from './App.vue'
+import router from './router'
+import store from './store'
 
-export function configure(aurelia) {
-  aurelia.use
-    .standardConfiguration()
-    .feature('resources');
+Vue.use(VueRouter)
 
-  if (environment.debug) {
-    aurelia.use.developmentLogging();
-  }
-
-  if (environment.testing) {
-    aurelia.use.plugin('aurelia-testing');
-  }
-
-  aurelia.start().then(() => aurelia.setRoot());
-}
+new Vue({
+  el: '#app',
+  router,
+  store,
+  render: h => h(App)
+})
