@@ -44,3 +44,4 @@ skip_files:
 - ^webpack\.config\.js$
 - node_modules/
 - src/
+- test/

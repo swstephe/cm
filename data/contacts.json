@@ -1,0 +1,32 @@
+[
+  {
+    "first":"John",
+    "last":"Tolkien",
+    "email":"tolkien@inklings.com",
+    "phone":"867-5309"
+  },
+  {
+    "first":"Clive",
+    "last":"Lewis",
+    "email":"lewis@inklings.com",
+    "phone":"867-5309"
+  },
+  {
+    "first":"Owen",
+    "last":"Barfield",
+    "email":"barfield@inklings.com",
+    "phone":"867-5309"
+  },
+  {
+    "first":"Charles",
+    "last":"Williams",
+    "email":"williams@inklings.com",
+    "phone":"867-5309"
+  },
+  {
+    "first":"Roger",
+    "last":"Green",
+    "email":"green@inklings.com",
+    "phone":"867-5309"
+  }
+]

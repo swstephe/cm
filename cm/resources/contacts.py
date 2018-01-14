@@ -1,4 +1,5 @@
 # -*- coding: utf8 -*-
+import falcon
 from cm.config import getLogger
 from cm.db import model
 
@@ -9,7 +10,7 @@ def record(contact):
     if contact is None:
         return None
     return {
-        'id': contact.id(),
+        'id': contact.key.id(),
         'first': contact.first,
         'last': contact.last,
         'email': contact.email,
@@ -17,9 +18,20 @@ def record(contact):
     }
 
 
+class ContactNotFound(model.NotFound):
+    @staticmethod
+    def handle(ex, req, resp, params):
+        raise falcon.HTTPNotFound(title=ex.title, description=ex.message)
+
+
+class ContactBadParameter(model.BadParameter):
+    @staticmethod
+    def handle(ex, req, resp, params):
+        raise falcon.HTTPInvalidParam(msg=ex.message, param_name='id')
+
+
 class ContactsResource(object):
     def on_get(self, req, resp, _id=None):
-        log.info("ContactsResource.on_get")
         if _id is None:
             resp.media = {
                 'contacts': list(
@@ -30,25 +42,14 @@ class ContactsResource(object):
         else:
             resp.media = record(model.Contacts.get(_id))
 
-    def on_post(self, req, resp, _id):
-        first = req.media.get('first')
-        last = req.media.get('last')
-        email = req.media.get('email')
-        phone = req.media.get('phone')
-        _id = model.Contacts.create(first, last, email, phone)
-        resp.media = {
-            'id': _id,
-            'first': first,
-            'last': last,
-            'phone': phone
-        }
+    def on_post(self, req, resp):
+        data = dict(req.media.items())
+        data['id'] = model.Contacts.create(**data)
+        resp.media = data
 
     def on_patch(self, req, resp, _id):
-        first = req.media.get('first')
-        last = req.media.get('last')
-        email = req.media.get('email')
-        phone = req.media.get('phone')
-        model.Contacts.update(_id, first, last, email, phone)
+        data = dict(req.media.items())
+        model.Contacts.update(_id, **data)
 
     def on_delete(self, req, resp, _id):
         model.Contacts.delete(_id)

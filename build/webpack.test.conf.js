@@ -2,10 +2,6 @@ const path = require('path')
 const webpack = require('webpack')
 
 module.exports = {
-  entry: {
-    app: './src/main.js',
-    vendor: ['auth0-js', 'axios', 'vue', 'vuex', 'vuex-persistedstate']
-  },
   output: {
     path: path.resolve(__dirname, './dist'),
     publicPath: '/dist/',
@@ -54,5 +50,5 @@ module.exports = {
   performance: {
     hints: false
   },
-  devtool: '#eval-source-map'
+  devtool: '#inline-source-map'
 }
