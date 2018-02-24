@@ -28,12 +28,15 @@ def fields_from_dict(source):
 def fields_from_record(record):
     return dict((f, getattr(record, f)) for f in FIELDS)
 
+def clear():
+    Contacts().clear()
 
 def load():
     contacts = {}
+    db = Contacts()
     for record in CONTACTS:
         fields = fields_from_dict(record)
-        _id = Contacts.create(**fields)
+        _id = db.create(**fields)
         if _id in contacts:
             raise RuntimeError("duplicate id values:%r" % _id)
         contacts[_id] = fields

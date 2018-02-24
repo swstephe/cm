@@ -1,55 +1,48 @@
 # -*- coding: utf8 -*-
 import falcon
-from cm.config import getLogger
-from cm.db import model
-
-log = getLogger(__name__)
-
+from cm.db import contacts
 
 def record(contact):
     if contact is None:
         return None
-    return {
-        'id': contact.key.id(),
-        'first': contact.first,
-        'last': contact.last,
-        'email': contact.email,
-        'phone': contact.phone
-    }
+    return dict(
+        id=str(contact.key.id()),
+        first=contact.first,
+        last=contact.last,
+        phones=list(phone.value for phone in contact.phones),
+        emails=list(email.value for email in contact.emails)
+    )
 
 
-class ContactNotFound(model.NotFound):
+class NotFound(contacts.NotFound):
     @staticmethod
     def handle(ex, req, resp, params):
-        raise falcon.HTTPNotFound(title=ex.title, description=ex.message)
+        raise falcon.HTTPNotFound(title=ex.message)
 
 
-class ContactBadParameter(model.BadParameter):
+class BadParameter(contacts.BadParameter):
     @staticmethod
     def handle(ex, req, resp, params):
         raise falcon.HTTPInvalidParam(msg=ex.message, param_name='id')
 
 
-class ContactsResource(object):
+class Contacts(object):
     def on_get(self, req, resp, _id=None):
         if _id is None:
-            resp.media = {
-                'contacts': list(
+            resp.media = dict(
+                contacts=list(
                     record(contact)
-                    for contact in model.Contacts.get_all()
+                    for contact in contacts.Contact.get_all()
                 )
-            }
+            )
         else:
-            resp.media = record(model.Contacts.get(_id))
+            resp.media = record(contacts.Contact.get(_id))
 
     def on_post(self, req, resp):
-        data = dict(req.media.items())
-        data['id'] = model.Contacts.create(**data)
-        resp.media = data
+        resp.media = contacts.Contact.create(**req.media)
 
     def on_patch(self, req, resp, _id):
-        data = dict(req.media.items())
-        model.Contacts.update(_id, **data)
+        contacts.Contact.update(_id, **req.media)
 
     def on_delete(self, req, resp, _id):
-        model.Contacts.delete(_id)
+        contacts.Contact.delete(_id)

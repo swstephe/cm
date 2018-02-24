@@ -4,3 +4,5 @@ lib
 node_modules
 scripts
 ui/.sass-cache/
+index.yaml
+package-lock.json

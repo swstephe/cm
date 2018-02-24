@@ -2,12 +2,11 @@
 import json
 import unittest
 
-from google.appengine.ext import ndb
 from google.appengine.ext import testbed
 from falcon import testing
 from cm.app import api
 from cm.db.model import FIELDS
-from data import RECORD, UPDATE, load
+from data import RECORD, UPDATE, load, clear
 
 
 class APITestCase(testing.TestCase):
@@ -15,12 +14,11 @@ class APITestCase(testing.TestCase):
         super(APITestCase, self).setUp()
         self.testbed = testbed.Testbed()
         self.testbed.activate()
-        self.testbed.init_datastore_v3_stub()
         self.testbed.init_memcache_stub()
-        ndb.get_context().clear_cache()
         self.app = api
 
     def tearDown(self):
+        clear()
         self.testbed.deactivate()
 
     def testContactsGetAll(self):
@@ -47,7 +45,7 @@ class APITestCase(testing.TestCase):
             for f in FIELDS:
                 self.assertEqual(v[f], contact[f])
         result = self.simulate_get('/contacts/999')
-        self.assertEqual(404, result.status_code)
+        self.assertEqual(400, result.status_code)
         result = self.simulate_get('/contacts/abc')
         self.assertEqual(400, result.status_code)
 

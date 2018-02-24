@@ -1,58 +1,34 @@
+'use strict'
 const path = require('path')
-const webpack = require('webpack')
 
 module.exports = {
-  entry: {
-    app: './src/main.js',
-    vendor: ['auth0-js', 'axios', 'vue', 'vuex', 'vuex-persistedstate']
-  },
+  entry: './client/src/main.js',
   output: {
-    path: path.resolve(__dirname, './dist'),
-    publicPath: '/dist/',
+    path: path.resolve(__dirname, 'static/js'),
+    publicPath: '/static/js',
     filename: 'app.js'
   },
   module: {
     rules: [
-      {
-        test: /\.css$/,
-        use: [
-          'vue-style-loader',
-          'css-loader'
-        ]
-      },
-      {
-        test: /\.vue$/,
-        loader: 'vue-loader'
-      },
       {
         test: /\.js$/,
         loader: 'babel-loader',
         exclude: /node_modules/
       },
       {
-        test: /\.(png|jpg|gif|svg)$/,
-        loader: 'file-loader',
-        options: {
-          name: '[name].[ext]?[hash]'
-        }
+        test: /\.vue$/,
+        loader: 'vue-loader'
       }
     ]
   },
-  plugins: [
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
-      minChunks: Infinity,
-      filename: 'vendor.js'
-    })
-  ],
-  resolve: {
-    alias: {
-      'vue$': 'vue/dist/vue.esm.js'
+  devtool: 'cheap-eval-source-map',
+  devServer: {
+    contentBase: __dirname + '/static',
+    historyApiFallback: {
+      index: 'index.html'
     },
-    extensions: ['*', '.js', '.vue', '.json']
-  },
-  performance: {
-    hints: false
-  },
-  devtool: '#eval-source-map'
+    proxy: {
+      '/contacts': 'http://localhost:8000'
+    }
+  }
 }

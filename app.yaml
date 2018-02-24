@@ -2,34 +2,35 @@ runtime: python27
 api_version: 1
 threadsafe: yes
 
-libraries:
-- name: pycrypto
-  version: "2.6.1"
-
 handlers:
 - url: /
-  static_files: index.html
-  upload: index\.html
-
-- url: /callback
-  static_files: index.html
-  upload: index\.html
+  static_files: static/index.html
+  upload: static/index\.html
+  login: required
 
 - url: /contact/.*
-  static_files: index.html
-  upload: index\.html
+  static_files: static/index.html
+  upload: static/index\.html
 
 - url: /favicon\.ico
-  static_files: favicon.ico
-  upload: favicon\.ico
+  static_files: static/favicon.ico
+  upload: static/favicon\.ico
 
-- url: /dist
-  static_dir: dist
+- url: /css
+  static_dir: static/css
+
+- url: /js
+  static_dir: static/js
 
 - url: /contacts
   script: cm.app.api
+  login: required
 
 - url: /contacts/.*
+  script: cm.app.api
+  login: required
+
+- url: /logout
   script: cm.app.api
 
 skip_files:
@@ -42,6 +43,6 @@ skip_files:
 - ^package\.json$
 - ^package-lock\.json$
 - ^webpack\.config\.js$
+- client/
 - node_modules/
-- src/
 - test/
