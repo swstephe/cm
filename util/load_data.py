@@ -9,7 +9,7 @@ import requests
 USER = 'zahi.stephens@gmail.com'
 CWD = os.path.dirname(os.path.realpath(__file__))
 ROOT = os.path.dirname(CWD)
-with open(os.path.join(ROOT, 'tests', 'contacts.json')) as f:
+with open(os.path.join(ROOT, 'data', 'contacts.json')) as f:
     CONTACTS = json.load(f)
 
 if __name__ == '__main__':
@@ -18,7 +18,7 @@ if __name__ == '__main__':
     parser.add_argument('--user', '-u', default=USER, help="Username (default %r)"%USER)
     args = parser.parse_args()
     r = requests.get(args.url + '_ah/login?email={}&action=Login&continue={}'.format(args.user, args.url))
-    cookie = r.history[0].cookies['dev_appserver_login']
+    cookie = r.history[0].cookies.get('dev_appserver_login')
     for contact in CONTACTS:
         r = requests.post(
             args.url + 'contacts',

@@ -44,5 +44,7 @@ skip_files:
 - ^package-lock\.json$
 - ^webpack\.config\.js$
 - client/
+- data/
 - node_modules/
-- test/
+- tests/
+- util/
